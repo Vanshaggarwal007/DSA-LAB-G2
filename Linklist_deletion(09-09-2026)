@@ -1,0 +1,87 @@
+// LINKED LIST DELETION USING P AND Q
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+// Delete from Beginning
+struct Node* deleteBeginning(struct Node *head) {
+    struct Node *p = head;
+    head = head->next;
+    free(p);
+    return head;
+}
+
+// Delete from Between
+void deleteBetween(struct Node *head) {
+    struct Node *p = head;
+    struct Node *q = head->next;
+
+    p->next = q->next;
+    free(q);
+}
+
+// Delete from End
+void deleteEnd(struct Node *head) {
+    struct Node *p = head;
+    struct Node *q = head->next;
+
+    while (q->next != NULL) {
+        p = q;
+        q = q->next;
+    }
+
+    p->next = NULL;
+    free(q);
+}
+
+// Display
+void display(struct Node *head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node *head, *a, *b, *c, *d;
+
+    a = malloc(sizeof(struct Node));
+    b = malloc(sizeof(struct Node));
+    c = malloc(sizeof(struct Node));
+    d = malloc(sizeof(struct Node));
+
+    a->data = 10;
+    b->data = 20;
+    c->data = 30;
+    d->data = 40;
+
+    a->next = b;
+    b->next = c;
+    c->next = d;
+    d->next = NULL;
+
+    head = a;
+
+    printf("Original: ");
+    display(head);
+
+    head = deleteBeginning(head);
+    printf("After Beginning: ");
+    display(head);
+
+    deleteBetween(head);
+    printf("After Between: ");
+    display(head);
+
+    deleteEnd(head);
+    printf("After End: ");
+    display(head);
+
+    return 0;
+}
