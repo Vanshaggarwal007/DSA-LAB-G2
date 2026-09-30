@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *last = NULL;
+//end
+void insert(int data) {
+    struct Node *newNode = malloc(sizeof(struct Node));
+    newNode->data = data;
+
+    if (last == NULL) {
+        last = newNode;
+        newNode->next = last;
+    } else {
+        newNode->next = last->next;
+        last->next = newNode;
+        last = newNode;
+    }
+}
+
+// Delete a node
+void deleteNode(int data) {
+    if (last == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    struct Node *current = last->next;
+    struct Node *prev = last;
+
+    do {
+        if (current->data == data) {
+            if (current == last && current->next == last) {
+                last = NULL;
+            } else {
+                prev->next = current->next;
+
+                if (current == last)
+                    last = prev;
+            }
+
+            free(current);
+            printf("%d deleted.\n", data);
+            return;
+        }
+
+        prev = current;
+        current = current->next;
+    } while (current != last->next);
+
+    printf("%d not found.\n", data);
+}
+
+// Display the list
+void display() {
+    if (last == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    struct Node *temp = last->next;
+
+    printf("Circular Linked List: ");
+
+    do {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    } while (temp != last->next);
+
+    printf("(back to head)\n");
+}
+
+int main() {
+    insert(10);
+    insert(20);
+    insert(30);
+    insert(40);
+
+    display();
+
+    deleteNode(20);
+    display();
+
+    return 0;
+}
