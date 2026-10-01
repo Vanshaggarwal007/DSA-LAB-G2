@@ -5,15 +5,15 @@
 int stack[MAX];
 int top = -1;
 
-void push(int value) {
+void push(int x) {
     if (top == MAX - 1) {
         printf("Stack Overflow\n");
         return;
     }
 
     top++;
-    stack[top] = value;
-    printf("%d pushed into stack\n", value);
+    stack[top] = x;
+    printf("%d pushed into stack\n", x);
 }
 
 void pop() {
@@ -48,7 +48,7 @@ void display() {
     printf("\n");
 }
 
-int main() {
+void main() {
     push(10);
     push(20);
     push(30);
@@ -59,6 +59,4 @@ int main() {
 
     pop();
     display();
-
-    return 0;
 }
